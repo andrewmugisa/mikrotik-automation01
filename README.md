@@ -1,5 +1,3 @@
-Here’s your content turned into a clean, professional **README.md** you can drop into your repo:
-
 ---
 
 # ⚙️ MikroTik Automation (Java)
