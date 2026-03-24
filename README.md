@@ -66,3 +66,40 @@ Asynchronous API handling: Uses ResultListener and CountDownLatch to wait for ro
 temperature is only available on some hardware. RB951G-2HnD, for example, does not report a value.
 Router API must be enabled (Winbox → IP → Services → API should be active).
 Always test on a safe environment (like CHR) before production.
+
+
+
+
+
++--------------------+        Connect via API         +--------------------+
+|                    | ----------------------------> |                    |
+| Java Application   |                               |  MikroTik Router   |
+| (AddUserExample)   | <---------------------------- |  (API Enabled)     |
+|                    |       Auth Response          |                    |
++---------+----------+                               +---------+----------+
+          |                                                 |
+          | Request existing users                           |
+          |------------------------------------------------>|
+          |                                                 |
+          | Receive list of users                            |
+          |<------------------------------------------------|
+          |                                                 |
+          | Check if new user exists                         |
+          |                                                 |
+          | Create new user if needed                        |
+          |------------------------------------------------>|
+          |                                                 |
+          | Receive creation status                           |
+          |<------------------------------------------------|
+          |                                                 |
+          | Fetch system info (CPU, uptime, name, temp)     |
+          |------------------------------------------------>|
+          |                                                 |
+          | Receive system info                               |
+          |<------------------------------------------------|
+          |                                                 |
+          v
++--------------------+
+| Console Output     |
+| (Users & System)   |
++--------------------+
