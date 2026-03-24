@@ -1,76 +1,149 @@
-"# mikrotik-automation01" 
-MikroTik Automation Java Project
+Here’s your content turned into a clean, professional **README.md** you can drop into your repo:
 
-This project demonstrates how to interact with a MikroTik router using Java.
-It allows you to:
+---
 
-Connect to a MikroTik router via API
-List existing users
-Create a new user if it doesn’t exist
-Fetch basic system info (CPU load, uptime, router name, temperature if available)
+# ⚙️ MikroTik Automation (Java)
 
-⚙️ Requirements
-Java 17+ (or compatible)
-Maven
-MikroTik router (any model with API enabled)
-PC connected via Ethernet to the MikroTik router
-Optional: CHR (Cloud Hosted Router) for local testing
+This project demonstrates how to interact with a MikroTik router using Java via API.
 
-📦 Setup
-Clone the project or download the source code.
-Build with Maven:
+It provides basic automation features such as user management and system monitoring.
+
+---
+
+## 🚀 Features
+
+* 🔐 Connect to a MikroTik router via API
+* 👥 List existing users
+* ➕ Create a new user (only if it doesn’t already exist)
+* 📊 Fetch system information:
+
+  * CPU load
+  * Uptime
+  * Router identity (name)
+  * Temperature *(if supported)*
+* ⚡ Asynchronous API handling using `ResultListener` and `CountDownLatch`
+
+---
+
+## ⚙️ Requirements
+
+* Java 17+
+* Maven
+* MikroTik router (API enabled)
+* PC connected via Ethernet
+* *(Optional)* CHR (Cloud Hosted Router) for local testing
+
+---
+
+## 📦 Setup
+
+### 1. Clone or Download
+
+```bash
+git clone (https://github.com/andrewmugisa/mikrotik-automation01.git)
+cd mikrotik-automation01
+```
+
+### 2. Build Project
+
+```bash
 mvn clean install
-Add tik4j dependency in pom.xml (already included in this project).
+```
 
-💻 Assign IP to PC (Ethernet)
+### 3. Dependencies
 
-To access the router from your PC:
+This project uses **tik4j** for MikroTik API interaction (already included in `pom.xml`).
 
-Plug your PC into the MikroTik router via Ethernet.
-Assign a static IP on the same subnet as the router (default MikroTik IP: 192.168.88.1).
+---
 
-On Windows (Command Prompt as Admin):
+## 💻 Network Configuration
 
+To connect to the MikroTik router, your PC must be on the same subnet.
+
+**Default MikroTik IP:** `192.168.88.1`
+
+---
+
+### 🪟 Windows
+
+Run Command Prompt as Administrator:
+
+```bash
 netsh interface ip set address "Ethernet" static 192.168.88.100 255.255.255.0 192.168.88.1
-"Ethernet" → replace with your Ethernet interface name
-192.168.88.100 → desired PC IP
-255.255.255.0 → subnet mask
-192.168.88.1 → router gateway
+```
 
-On Linux (Terminal):
+> Replace `"Ethernet"` with your actual interface name if different.
 
+---
+
+### 🐧 Linux
+
+```bash
 sudo ip addr add 192.168.88.100/24 dev eth0
 sudo ip route add default via 192.168.88.1
-eth0 → your Ethernet interface name
+```
 
-🚀 Running the Project
-Update the MikroTik credentials in AddUserExample.java:
+> Replace `eth0` with your actual interface name.
+
+---
+
+## 🔧 Configuration
+
+Update credentials in:
+
+```
+AddUserExample.java
+```
+
+```java
 String host = "192.168.88.1";
 String username = "admin";
 String password = "admin";
-Run the main class:
+```
+
+---
+
+## ▶️ Run the Project
+
+```bash
 mvn exec:java -Dexec.mainClass="com.example.AddUserExample"
-Output will show:
-Existing users
-Status of creating the new user
-Current users
-Basic system info (CPU, uptime, router name, temperature if available)
+```
 
-🧰 Features
-Add user: Only if the user doesn’t exist
-Fetch users: Prints all current users
-Fetch system info: Name, CPU load, uptime, temperature (if supported)
-Asynchronous API handling: Uses ResultListener and CountDownLatch to wait for router responses
+---
 
-⚠️ Notes
-temperature is only available on some hardware. RB951G-2HnD, for example, does not report a value.
-Router API must be enabled (Winbox → IP → Services → API should be active).
-Always test on a safe environment (like CHR) before production.
+## 📤 Expected Output
 
+The console will display:
 
+* Existing users
+* Result of user creation
+* Updated user list
+* System information:
 
+  * CPU load
+  * Uptime
+  * Router name
+  * Temperature *(if available)*
 
+---
 
+## ⚠️ Notes
+
+* 🌡️ Temperature is hardware-dependent
+
+  * Example: `RB951G-2HnD` does **not** report temperature
+
+* 🔌 Ensure API is enabled:
+
+  * Winbox → **IP → Services → API**
+
+* 🧪 Always test in a safe environment (e.g., CHR) before production use
+
+---
+
+## 🧭 How It Works
+
+```
 +--------------------+        Connect via API         +--------------------+
 |                    | ----------------------------> |                    |
 | Java Application   |                               |  MikroTik Router   |
@@ -89,13 +162,13 @@ Always test on a safe environment (like CHR) before production.
           | Create new user if needed                        |
           |------------------------------------------------>|
           |                                                 |
-          | Receive creation status                           |
+          | Receive creation status                          |
           |<------------------------------------------------|
           |                                                 |
           | Fetch system info (CPU, uptime, name, temp)     |
           |------------------------------------------------>|
           |                                                 |
-          | Receive system info                               |
+          | Receive system info                             |
           |<------------------------------------------------|
           |                                                 |
           v
@@ -103,3 +176,18 @@ Always test on a safe environment (like CHR) before production.
 | Console Output     |
 | (Users & System)   |
 +--------------------+
+```
+
+---
+
+## 📄 License
+
+This project is open-source and free to use, modify, and distribute.
+
+---
+
+## 👤 Author
+
+**Andrew**
+
+---
